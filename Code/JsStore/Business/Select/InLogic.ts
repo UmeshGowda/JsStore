@@ -18,10 +18,8 @@ namespace JsStore {
                 };
 
                 private executeSkipAndLimitForIn = function (column, values) {
-                    var cursor: IDBCursorWithValue,
-                        skip = this._skipRecord,
+                    var skip = this._skipRecord,
                         column_store = this._objectStore.index(column),
-                        cursor_request: IDBRequest,
                         skipOrPush = function (value) {
                             if (skip === 0) {
                                 this._results.push(value);
@@ -33,7 +31,8 @@ namespace JsStore {
                     if (this._checkFlag) {
                         for (var i = 0, length = values.length; i < length; i++) {
                             if (!this._errorOccured) {
-                                cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                var cursor: IDBCursorWithValue,
+                                    cursor_request: IDBRequest = column_store.openCursor(IDBKeyRange.only(values[i]));
                                 cursor_request.onsuccess = function (e) {
                                     cursor = e.target.result;
                                     if (this._results.length !== this._limitRecord && cursor) {
@@ -43,13 +42,19 @@ namespace JsStore {
                                         cursor.continue();
                                     }
                                 }.bind(this);
+
+                                cursor_request.onerror = function (e) {
+                                    this._errorOccured = true;
+                                    this.onErrorOccured(e);
+                                }.bind(this);
                             }
                         }
                     }
                     else {
                         for (var i = 0, length = values.length; i < length; i++) {
                             if (!this._errorOccured) {
-                                cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                var cursor: IDBCursorWithValue,
+                                    cursor_request: IDBRequest = column_store.openCursor(IDBKeyRange.only(values[i]));
                                 cursor_request.onsuccess = function (e) {
                                     cursor = e.target.result;
                                     if (this._results.length !== this._limitRecord && cursor) {
@@ -57,19 +62,18 @@ namespace JsStore {
                                         cursor.continue();
                                     }
                                 }.bind(this);
+
+                                cursor_request.onerror = function (e) {
+                                    this._errorOccured = true;
+                                    this.onErrorOccured(e);
+                                }.bind(this);
                             }
                         }
                     }
-                    cursor_request.onerror = function (e) {
-                        this._errorOccured = true;
-                        this.onErrorOccured(e);
-                    }.bind(this);
                 };
 
                 private executeSkipForIn = function (column, values) {
-                    var cursor: IDBCursorWithValue,
-                        skip = this._skipRecord,
-                        cursor_request: IDBRequest,
+                    var skip = this._skipRecord,
                         column_store = this._objectStore.index(column),
                         skipOrPush = function (value) {
                             if (skip === 0) {
@@ -82,7 +86,8 @@ namespace JsStore {
                     if (this._checkFlag) {
                         for (var i = 0, length = values.length; i < length; i++) {
                             if (!this._errorOccured) {
-                                cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                var cursor: IDBCursorWithValue,
+                                    cursor_request: IDBRequest = column_store.openCursor(IDBKeyRange.only(values[i]));
                                 cursor_request.onsuccess = function (e) {
                                     cursor = e.target.result;
                                     if (cursor) {
@@ -92,13 +97,19 @@ namespace JsStore {
                                         cursor.continue();
                                     }
                                 }.bind(this);
+
+                                cursor_request.onerror = function (e) {
+                                    this._errorOccured = true;
+                                    this.onErrorOccured(e);
+                                }.bind(this);
                             }
                         }
                     }
                     else {
                         for (var i = 0, length = values.length; i < length; i++) {
                             if (!this._errorOccured) {
-                                cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                var cursor: IDBCursorWithValue,
+                                    cursor_request: IDBRequest = column_store.openCursor(IDBKeyRange.only(values[i]));
                                 cursor_request.onsuccess = function (e) {
                                     cursor = e.target.result;
                                     if (cursor) {
@@ -106,23 +117,23 @@ namespace JsStore {
                                         cursor.continue();
                                     }
                                 }.bind(this);
+
+                                cursor_request.onerror = function (e) {
+                                    this._errorOccured = true;
+                                    this.onErrorOccured(e);
+                                }.bind(this);
                             }
                         }
                     }
-                    cursor_request.onerror = function (e) {
-                        this._errorOccured = true;
-                        this.onErrorOccured(e);
-                    }.bind(this);
                 };
 
                 private executeLimitForIn = function (column, values) {
-                    var cursor: IDBCursorWithValue,
-                        cursor_request: IDBRequest,
-                        column_store = this._objectStore.index(column);
+                    var column_store = this._objectStore.index(column);
                     if (this._checkFlag) {
                         for (var i = 0, length = values.length; i < length; i++) {
                             if (!this._errorOccured) {
-                                cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                var cursor: IDBCursorWithValue,
+                                    cursor_request: IDBRequest = column_store.openCursor(IDBKeyRange.only(values[i]));
                                 cursor_request.onsuccess = function (e) {
                                     cursor = e.target.result;
                                     if (cursor && this._results.length !== this._limitRecord) {
@@ -132,13 +143,19 @@ namespace JsStore {
                                         cursor.continue();
                                     }
                                 }.bind(this);
+
+                                cursor_request.onerror = function (e) {
+                                    this._errorOccured = true;
+                                    this.onErrorOccured(e);
+                                }.bind(this);
                             }
                         }
                     }
                     else {
                         for (var i = 0, length = values.length; i < length; i++) {
                             if (!this._errorOccured) {
-                                cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                var cursor: IDBCursorWithValue,
+                                    cursor_request: IDBRequest = column_store.openCursor(IDBKeyRange.only(values[i]));
                                 cursor_request.onsuccess = function (e) {
                                     cursor = e.target.result;
                                     if (cursor && this._results.length !== this._limitRecord) {
@@ -146,23 +163,23 @@ namespace JsStore {
                                         cursor.continue();
                                     }
                                 }.bind(this);
+
+                                cursor_request.onerror = function (e) {
+                                    this._errorOccured = true;
+                                    this.onErrorOccured(e);
+                                }.bind(this);
                             }
                         }
                     }
-                    cursor_request.onerror = function (e) {
-                        this._errorOccured = true;
-                        this.onErrorOccured(e);
-                    }.bind(this);
                 };
 
                 private executeSimpleForIn = function (column, values) {
-                    var cursor: IDBCursorWithValue,
-                        cursor_request: IDBRequest,
-                        column_store = this._objectStore.index(column);
+                    var column_store = this._objectStore.index(column);
                     if (this._checkFlag) {
                         for (var i = 0, length = values.length; i < length; i++) {
                             if (!this._errorOccured) {
-                                cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                var cursor: IDBCursorWithValue,
+                                    cursor_request: IDBRequest = column_store.openCursor(IDBKeyRange.only(values[i]));
                                 cursor_request.onsuccess = function (e) {
                                     cursor = e.target.result;
                                     if (cursor) {
@@ -172,13 +189,19 @@ namespace JsStore {
                                         cursor.continue();
                                     }
                                 }.bind(this);
+
+                                cursor_request.onerror = function (e) {
+                                    this._errorOccured = true;
+                                    this.onErrorOccured(e);
+                                }.bind(this);
                             }
                         }
                     }
                     else {
                         for (var i = 0, length = values.length; i < length; i++) {
                             if (!this._errorOccured) {
-                                cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                var cursor: IDBCursorWithValue,
+                                    cursor_request: IDBRequest = column_store.openCursor(IDBKeyRange.only(values[i]));
                                 cursor_request.onsuccess = function (e) {
                                     cursor = e.target.result;
                                     if (cursor) {
@@ -186,13 +209,14 @@ namespace JsStore {
                                         cursor.continue();
                                     }
                                 }.bind(this);
+
+                                cursor_request.onerror = function (e) {
+                                    this._errorOccured = true;
+                                    this.onErrorOccured(e);
+                                }.bind(this);
                             }
                         }
                     }
-                    cursor_request.onerror = function (e) {
-                        this._errorOccured = true;
-                        this.onErrorOccured(e);
-                    }.bind(this);
                 };
             }
         }

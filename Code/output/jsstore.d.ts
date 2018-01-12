@@ -516,7 +516,7 @@ declare namespace JsStore {
             protected onErrorOccured: (e: any, customError?: boolean) => void;
             protected onTransactionTimeout: (e: any) => void;
             protected onExceptionOccured: (ex: DOMException, info: any) => void;
-            protected processAtsLogic: (columnName: any, searchValue: any, occurence: Occurence) => void;
+            protected processAtsLogic: (columnName: any, searchValue: string, occurence: Occurence) => void;
             protected goToWhereLogic: (processAts?: boolean) => void;
             protected makeQryInCaseSensitive: (qry: any) => any;
         }

@@ -48,36 +48,61 @@ namespace JsStore {
                 }
             };
 
-            protected processAtsLogic = function (columnName, searchValue, occurence: Occurence) {
-                var cursor_request = this._transaction.objectStore(this._tableName + "_" + columnName).
-                    index(columnName).openCursor(
-                    this.getKeyRange({ Low: searchValue, High: searchValue + '\uffff' }, '-')
-                    ),
-                    cursor: IDBCursorWithValue,
+            protected processAtsLogic = function (columnName, searchValue: string, occurence: Occurence) {
+                var table_name = this._tableName + "_" + columnName,
                     key = this.getPrimaryKey(this._tableName),
-                    key_list = [];
-                cursor_request.onsuccess = function (e) {
-                    cursor = e.target.result;
-                    if (cursor) {
-                        key_list.push(cursor.value[key]);
-                        cursor.continue();
-                    }
-                    else {
-                        if (!this._errorOccured) {
-                            if (occurence === Occurence.Any) {
-                                delete this._query.Where[columnName];
-                            }
-                            this._query.Where[key] = {};
-                            this._query.Where[key]['In'] = key_list;
-                            this.goToWhereLogic(false);
+                    key_list = [],
+                    i = 0,
+                    possible_values = this.getAllCombinationOfWord(searchValue),
+                    length = possible_values.length,
+                    getKeyList = function () {
+                        var value = possible_values[i],
+                            cursor_request = this._transaction.objectStore(table_name).
+                                index(columnName).openCursor(
+                                IDBKeyRange.bound(value, value + '\uffff'),
+                                'prev'
+                                ),
+                            cursor: IDBCursorWithValue;
+                        if (i + 1 === length) {
+                            cursor_request.onsuccess = function (e) {
+                                cursor = e.target.result;
+                                if (cursor) {
+                                    key_list.push(cursor.value[key]);
+                                    cursor.continue();
+                                }
+                                else {
+                                    if (!this._errorOccured) {
+                                        if (occurence === Occurence.Any) {
+                                            delete this._query.Where[columnName];
+                                        }
+                                        this._query.Where[key] = {};
+                                        this._query.Where[key]['In'] = key_list.filter(function (item, pos) {
+                                            return key_list.indexOf(item) === pos;
+                                        });
+                                        this.goToWhereLogic(false);
+                                    }
+                                }
+                            }.bind(this);
                         }
-                    }
-                }.bind(this);
+                        else {
+                            cursor_request.onsuccess = function (e) {
+                                cursor = e.target.result;
+                                if (cursor) {
+                                    key_list.push(cursor.value[key]);
+                                    cursor.continue();
+                                }
+                                else {
+                                    getKeyList(++i);
+                                }
+                            }.bind(this);
+                        }
 
-                cursor_request.onerror = function (e) {
-                    this._errorOccured = true;
-                    this.onErrorOccured(e);
-                }.bind(this);
+                        cursor_request.onerror = function (e) {
+                            this._errorOccured = true;
+                            this.onErrorOccured(e);
+                        }.bind(this);
+                    }.bind(this);
+                getKeyList(i);
             };
 
             protected goToWhereLogic = function (processAts = true) {

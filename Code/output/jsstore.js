@@ -1208,29 +1208,48 @@ var JsStore;
                     }
                 };
                 _this.processAtsLogic = function (columnName, searchValue, occurence) {
-                    var cursor_request = this._transaction.objectStore(this._tableName + "_" + columnName).
-                        index(columnName).openCursor(this.getKeyRange({ Low: searchValue, High: searchValue + '\uffff' }, '-')), cursor, key = this.getPrimaryKey(this._tableName), key_list = [];
-                    cursor_request.onsuccess = function (e) {
-                        cursor = e.target.result;
-                        if (cursor) {
-                            key_list.push(cursor.value[key]);
-                            cursor.continue();
+                    var table_name = this._tableName + "_" + columnName, key = this.getPrimaryKey(this._tableName), key_list = [], i = 0, possible_values = this.getAllCombinationOfWord(searchValue), length = possible_values.length, getKeyList = function () {
+                        var value = possible_values[i], cursor_request = this._transaction.objectStore(table_name).
+                            index(columnName).openCursor(IDBKeyRange.bound(value, value + '\uffff'), 'prev'), cursor;
+                        if (i + 1 === length) {
+                            cursor_request.onsuccess = function (e) {
+                                cursor = e.target.result;
+                                if (cursor) {
+                                    key_list.push(cursor.value[key]);
+                                    cursor.continue();
+                                }
+                                else {
+                                    if (!this._errorOccured) {
+                                        if (occurence === JsStore.Occurence.Any) {
+                                            delete this._query.Where[columnName];
+                                        }
+                                        this._query.Where[key] = {};
+                                        this._query.Where[key]['In'] = key_list.filter(function (item, pos) {
+                                            return key_list.indexOf(item) === pos;
+                                        });
+                                        this.goToWhereLogic(false);
+                                    }
+                                }
+                            }.bind(this);
                         }
                         else {
-                            if (!this._errorOccured) {
-                                if (occurence === JsStore.Occurence.Any) {
-                                    delete this._query.Where[columnName];
+                            cursor_request.onsuccess = function (e) {
+                                cursor = e.target.result;
+                                if (cursor) {
+                                    key_list.push(cursor.value[key]);
+                                    cursor.continue();
                                 }
-                                this._query.Where[key] = {};
-                                this._query.Where[key]['In'] = key_list;
-                                this.goToWhereLogic(false);
-                            }
+                                else {
+                                    getKeyList(++i);
+                                }
+                            }.bind(this);
                         }
+                        cursor_request.onerror = function (e) {
+                            this._errorOccured = true;
+                            this.onErrorOccured(e);
+                        }.bind(this);
                     }.bind(this);
-                    cursor_request.onerror = function (e) {
-                        this._errorOccured = true;
-                        this.onErrorOccured(e);
-                    }.bind(this);
+                    getKeyList(i);
                 };
                 _this.goToWhereLogic = function (processAts) {
                     if (processAts === void 0) { processAts = true; }
@@ -2088,7 +2107,7 @@ var JsStore;
                         }
                     };
                     _this.executeSkipAndLimitForIn = function (column, values) {
-                        var cursor, skip = this._skipRecord, column_store = this._objectStore.index(column), cursor_request, skipOrPush = function (value) {
+                        var skip = this._skipRecord, column_store = this._objectStore.index(column), skipOrPush = function (value) {
                             if (skip === 0) {
                                 this._results.push(value);
                             }
@@ -2099,7 +2118,7 @@ var JsStore;
                         if (this._checkFlag) {
                             for (var i = 0, length = values.length; i < length; i++) {
                                 if (!this._errorOccured) {
-                                    cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                    var cursor, cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
                                     cursor_request.onsuccess = function (e) {
                                         cursor = e.target.result;
                                         if (this._results.length !== this._limitRecord && cursor) {
@@ -2109,13 +2128,17 @@ var JsStore;
                                             cursor.continue();
                                         }
                                     }.bind(this);
+                                    cursor_request.onerror = function (e) {
+                                        this._errorOccured = true;
+                                        this.onErrorOccured(e);
+                                    }.bind(this);
                                 }
                             }
                         }
                         else {
                             for (var i = 0, length = values.length; i < length; i++) {
                                 if (!this._errorOccured) {
-                                    cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                    var cursor, cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
                                     cursor_request.onsuccess = function (e) {
                                         cursor = e.target.result;
                                         if (this._results.length !== this._limitRecord && cursor) {
@@ -2123,16 +2146,16 @@ var JsStore;
                                             cursor.continue();
                                         }
                                     }.bind(this);
+                                    cursor_request.onerror = function (e) {
+                                        this._errorOccured = true;
+                                        this.onErrorOccured(e);
+                                    }.bind(this);
                                 }
                             }
                         }
-                        cursor_request.onerror = function (e) {
-                            this._errorOccured = true;
-                            this.onErrorOccured(e);
-                        }.bind(this);
                     };
                     _this.executeSkipForIn = function (column, values) {
-                        var cursor, skip = this._skipRecord, cursor_request, column_store = this._objectStore.index(column), skipOrPush = function (value) {
+                        var skip = this._skipRecord, column_store = this._objectStore.index(column), skipOrPush = function (value) {
                             if (skip === 0) {
                                 this._results.push(value);
                             }
@@ -2143,7 +2166,7 @@ var JsStore;
                         if (this._checkFlag) {
                             for (var i = 0, length = values.length; i < length; i++) {
                                 if (!this._errorOccured) {
-                                    cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                    var cursor, cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
                                     cursor_request.onsuccess = function (e) {
                                         cursor = e.target.result;
                                         if (cursor) {
@@ -2153,13 +2176,17 @@ var JsStore;
                                             cursor.continue();
                                         }
                                     }.bind(this);
+                                    cursor_request.onerror = function (e) {
+                                        this._errorOccured = true;
+                                        this.onErrorOccured(e);
+                                    }.bind(this);
                                 }
                             }
                         }
                         else {
                             for (var i = 0, length = values.length; i < length; i++) {
                                 if (!this._errorOccured) {
-                                    cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                    var cursor, cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
                                     cursor_request.onsuccess = function (e) {
                                         cursor = e.target.result;
                                         if (cursor) {
@@ -2167,20 +2194,20 @@ var JsStore;
                                             cursor.continue();
                                         }
                                     }.bind(this);
+                                    cursor_request.onerror = function (e) {
+                                        this._errorOccured = true;
+                                        this.onErrorOccured(e);
+                                    }.bind(this);
                                 }
                             }
                         }
-                        cursor_request.onerror = function (e) {
-                            this._errorOccured = true;
-                            this.onErrorOccured(e);
-                        }.bind(this);
                     };
                     _this.executeLimitForIn = function (column, values) {
-                        var cursor, cursor_request, column_store = this._objectStore.index(column);
+                        var column_store = this._objectStore.index(column);
                         if (this._checkFlag) {
                             for (var i = 0, length = values.length; i < length; i++) {
                                 if (!this._errorOccured) {
-                                    cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                    var cursor, cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
                                     cursor_request.onsuccess = function (e) {
                                         cursor = e.target.result;
                                         if (cursor && this._results.length !== this._limitRecord) {
@@ -2190,13 +2217,17 @@ var JsStore;
                                             cursor.continue();
                                         }
                                     }.bind(this);
+                                    cursor_request.onerror = function (e) {
+                                        this._errorOccured = true;
+                                        this.onErrorOccured(e);
+                                    }.bind(this);
                                 }
                             }
                         }
                         else {
                             for (var i = 0, length = values.length; i < length; i++) {
                                 if (!this._errorOccured) {
-                                    cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                    var cursor, cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
                                     cursor_request.onsuccess = function (e) {
                                         cursor = e.target.result;
                                         if (cursor && this._results.length !== this._limitRecord) {
@@ -2204,20 +2235,20 @@ var JsStore;
                                             cursor.continue();
                                         }
                                     }.bind(this);
+                                    cursor_request.onerror = function (e) {
+                                        this._errorOccured = true;
+                                        this.onErrorOccured(e);
+                                    }.bind(this);
                                 }
                             }
                         }
-                        cursor_request.onerror = function (e) {
-                            this._errorOccured = true;
-                            this.onErrorOccured(e);
-                        }.bind(this);
                     };
                     _this.executeSimpleForIn = function (column, values) {
-                        var cursor, cursor_request, column_store = this._objectStore.index(column);
+                        var column_store = this._objectStore.index(column);
                         if (this._checkFlag) {
                             for (var i = 0, length = values.length; i < length; i++) {
                                 if (!this._errorOccured) {
-                                    cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                    var cursor, cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
                                     cursor_request.onsuccess = function (e) {
                                         cursor = e.target.result;
                                         if (cursor) {
@@ -2227,13 +2258,17 @@ var JsStore;
                                             cursor.continue();
                                         }
                                     }.bind(this);
+                                    cursor_request.onerror = function (e) {
+                                        this._errorOccured = true;
+                                        this.onErrorOccured(e);
+                                    }.bind(this);
                                 }
                             }
                         }
                         else {
                             for (var i = 0, length = values.length; i < length; i++) {
                                 if (!this._errorOccured) {
-                                    cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
+                                    var cursor, cursor_request = column_store.openCursor(IDBKeyRange.only(values[i]));
                                     cursor_request.onsuccess = function (e) {
                                         cursor = e.target.result;
                                         if (cursor) {
@@ -2241,13 +2276,13 @@ var JsStore;
                                             cursor.continue();
                                         }
                                     }.bind(this);
+                                    cursor_request.onerror = function (e) {
+                                        this._errorOccured = true;
+                                        this.onErrorOccured(e);
+                                    }.bind(this);
                                 }
                             }
                         }
-                        cursor_request.onerror = function (e) {
-                            this._errorOccured = true;
-                            this.onErrorOccured(e);
-                        }.bind(this);
                     };
                     return _this;
                 }
