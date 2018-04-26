@@ -17,6 +17,8 @@
   },
   "devDependencies": {
     "@types/node": "^9.4.6",
+    "front-matter": "^2.3.0",
+    "showdown": "^1.8.6",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "ts-loader": "^3.5.0",
