@@ -8,7 +8,7 @@ In this tutorial we will learn how to do crud operation in jsstore.
 
 Here is the working demo of below tutorial -
 
-<script async src="https://jsfiddle.net/ujjwalguptaofficial/w850g25g/14/embed/"></script>
+<iframe src="https://jsfiddle.net/ujjwalguptaofficial/w850g25g/14/embedded/" id="JSFEMB_17647" width="100%" height="3952.400146484375" frameborder="0" sandbox="allow-modals allow-forms allow-scripts allow-same-origin allow-popups"></iframe>
 
 #### Installation
 
@@ -16,7 +16,22 @@ The simplest way to install jsstore is by using cdn. But since JsStore needs to 
 
 You can download the script from [github](https://github.com/ujjwalguptaofficial/JsStore "jsstore github link") or from [npm](https://www.npmjs.com/package/jsstore "jsstore npm link")
 
-<script src="https://gist.github.com/ujjwalguptaofficial/ab461acfd8c7307071611c0fee3266c5.js"></script>
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Crud Demo using jsstore</title>
+    <script src="jsstore.min.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+
+```
 
 For more about installation check out the [installation](/tutorial/installation)
 

@@ -32,7 +32,7 @@ exports.convertMdToVueAndSaveInFolder = function (folderToSave) {
         fs.writeFileSync(filePath, firstString + html + lastString, {
             encoding: 'utf8'
         });
-        console.log(html);
+        // console.log(html);
     });
 }
 

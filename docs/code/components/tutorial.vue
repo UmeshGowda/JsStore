@@ -20,8 +20,11 @@
 </v-layout>
 </template>
 <script lang="ts">
+declare var hljs;
 import { Component, Vue } from "nuxt-property-decorator";
-import { throws } from "assert";
+import * as axios from "axios";
+// import "../static/highlight_js/highlight.pack.js";
+
 export interface ITutorialLink {
   text: string;
   url: string;
@@ -36,12 +39,15 @@ export default class Tutorial extends Vue {
   linkList: ITutorialLink[] = [];
   constructor() {
     super();
+    // hljs.initHighlightingOnLoad();
+    // console.log(hljs);
     this.linkList = this.getLinks();
   }
 
   mounted() {
     // console.log(this.innerHtml);
     this.loadScript();
+  //  hljs.initHighlightingOnLoad()
   }
 
   get tutorialHtml() {
@@ -49,13 +55,25 @@ export default class Tutorial extends Vue {
   }
 
   private loadScript() {
+    var tutorialContainer = document.getElementById(
+      "divTutorialContent"
+    ) as HTMLElement;
     var scripts = (document.getElementById(
       "divTutorialContent"
     ) as HTMLElement).getElementsByTagName("script");
 
     for (var n = 0, length = scripts.length; n < length; n++) {
-      eval(scripts[n].innerHTML); //run script inside div
-      console.log(scripts[n].src);
+      var script = scripts[n];
+      var scriptCopy = document.createElement("script");
+      scriptCopy.src = script.src;
+      tutorialContainer.appendChild(scriptCopy);
+      // axios.default
+      //   .get(script.src, { crossdomain: true } as any)
+      //   .then(response => {
+      //     console.log(response.data);
+      //   });
+      // eval(script.innerHTML); //run script inside div
+      console.log(script.src);
     }
   }
 
