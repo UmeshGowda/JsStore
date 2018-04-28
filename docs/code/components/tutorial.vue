@@ -1,21 +1,24 @@
 <template>
 <v-layout>
-    <v-flex l2 class="hidden-md-and-down">
+    <v-flex md2 class="hidden-sm-and-down" id="divMenuContainer">
 <ul>
-     <li class="search">
-        <div class="search-wrapper card">
+     <li class="search margin-bottom-10px">
+       <v-card class="search-wrapper">
+         <v-card-text>
             <input id="txtSearch" type="text" placeholder="Search">
             <i class="material-icons">search</i>
             <div class="search-results"></div>
-        </div>
+         </v-card-text>
+       </v-card>
+       
     </li>
-    <li v-for="link in linkList" :key="link.text">
-        <a href="#">{{link.text}}</a>
+    <li v-for="link in linkList" :key="link.text" v-bind:class="{'link-active': link.url=== activeUrl}">
+        <a :href="link.url">{{link.text}}</a>
     </li>
 </ul>
     </v-flex>
     <v-flex id="divTutorialContent" sm12 md9 l7 xl6 class="margin-left-15px">
-    <div v-html="tutorialHtml"></div>
+    <div v-html="tutorialHtml" class="margin-top-20px"></div>
     </v-flex>
 </v-layout>
 </template>
@@ -23,7 +26,6 @@
 declare var hljs;
 import { Component, Vue } from "nuxt-property-decorator";
 import * as axios from "axios";
-// import "../static/highlight_js/highlight.pack.js";
 
 export interface ITutorialLink {
   text: string;
@@ -37,51 +39,82 @@ export interface ITutorialLink {
 export default class Tutorial extends Vue {
   innerHtml;
   linkList: ITutorialLink[] = [];
+  activeUrl = "";
   constructor() {
     super();
-    // hljs.initHighlightingOnLoad();
-    // console.log(hljs);
     this.linkList = this.getLinks();
-  }
-
-  mounted() {
-    // console.log(this.innerHtml);
-    this.loadScript();
-  //  hljs.initHighlightingOnLoad()
+    this.activeUrl = this.linkList[0].url;
   }
 
   get tutorialHtml() {
     return decodeURI(this.innerHtml);
   }
 
-  private loadScript() {
-    var tutorialContainer = document.getElementById(
-      "divTutorialContent"
-    ) as HTMLElement;
-    var scripts = (document.getElementById(
-      "divTutorialContent"
-    ) as HTMLElement).getElementsByTagName("script");
-
-    for (var n = 0, length = scripts.length; n < length; n++) {
-      var script = scripts[n];
-      var scriptCopy = document.createElement("script");
-      scriptCopy.src = script.src;
-      tutorialContainer.appendChild(scriptCopy);
-      // axios.default
-      //   .get(script.src, { crossdomain: true } as any)
-      //   .then(response => {
-      //     console.log(response.data);
-      //   });
-      // eval(script.innerHTML); //run script inside div
-      console.log(script.src);
-    }
-  }
-
   getLinks() {
     return [
       {
         text: "Get Started",
-        url: "tutorial"
+        url: "get_started"
+      },
+      {
+        text: "Installation",
+        url: "installation"
+      },
+      {
+        text: "Create Table",
+        url: "create_table"
+      },
+      {
+        text: "Create Database",
+        url: "create_database"
+      },
+      {
+        text: "insert",
+        url: "insert"
+      },
+      {
+        text: "Bulk Insert",
+        url: "bulk_insert"
+      },
+      {
+        text: "Select",
+        url: "select"
+      },
+      {
+        text: "Where",
+        url: "where"
+      },
+      {
+        text: "Ignore Case",
+        url: "ignore_case"
+      },
+      {
+        text: "Or",
+        url: "or"
+      },
+      {
+        text: "Limit",
+        url: "limit"
+      },
+      {
+        text: "Skip",
+        url: "skip"
+      },
+      {
+        text: "Order By",
+        url: "order_by"
+      },
+      {
+        text: "Aggregate",
+        url: "aggregate"
+      },
+      {
+        text: "Group By",
+        url: "group_by"
+      },
+      {
+        text: "Distinct",
+        url: "distinct"
       }
     ] as ITutorialLink[];
   }

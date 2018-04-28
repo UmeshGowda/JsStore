@@ -27,7 +27,7 @@ You can download the script from [github](https://github.com/ujjwalguptaofficial
     <script src="jsstore.min.js"></script>
 </head>
 <body>
-
+<h4>We have included JsStore in this html code.</h4>
 </body>
 </html>
 
@@ -41,18 +41,66 @@ JsStore follows SQL approach to create database - A database is consist of table
 
 Lets see how to create a database schema in JsStore.
 
-<script src="https://gist.github.com/ujjwalguptaofficial/ad1834836a85c23b0d56527a13053330.js"></script>
-
+```
+var DbName ='JsStore_Demo';
+function getDbSchema() {
+  var TblProduct = {
+    Name: 'Product',
+    Columns: [
+      {
+          Name: 'Id',
+          PrimaryKey: true,
+          AutoIncrement: true
+      }, 
+      {
+          Name: 'ItemName',
+          NotNull: true,
+          DataType: JsStore.Data_Type.String
+      }, 
+      {
+          Name: 'Price',
+          NotNull: true,
+          DataType: JsStore.Data_Type.Number
+      }, 
+      {
+          Name: 'Quantity',
+          NotNull: true,
+          DataType: JsStore.Data_Type.Number
+      }
+    ]
+  };
+  var Db = {
+      Name: DbName,
+      Tables: [TblProduct]
+  }
+  return Db;
+}
+```
 As written in the code, you can define the constraints like autoincrement, datatype, default, notnull as you can do in SQL.
 
 Now we need to create the database in indexeddb. So, lets create the database.
 
-<script src="https://gist.github.com/ujjwalguptaofficial/746bbfda9c5d2630c3fe730bd420faa7.js"></script>
+```
+var Connection = new JsStore.Instance();
+function initJsStore() {
+  JsStore.isDbExist(DbName, function(isExist) {
+    if (isExist) {
+      Connection.openDb(DbName);
+    } else {
+      var Database = getDbSchema();
+      Connection.createDb(Database);
+    }
+  }, function(err) {
+    console.error(err);
+  })
+}
+```
 
 In the above code -
 
 * Line 1 - Storing the JsStore connection instance in a variable 'Connection'.
 * Line 2 - Declared a function initJsStore which will initiate the jsstore. Basically this will create database if it does not exist or open if it exist.
+
 
 **Note :-** The connection object will be used to execute the further query. So we dont need to initiate it multiple times.
 
@@ -60,13 +108,48 @@ In the above code -
 
 JsStore provides insert API for inserting data.
 
-<script src="https://gist.github.com/ujjwalguptaofficial/5ea9288f35e13512bbc335763905a750.js"></script>
+```
+var Value = {
+  ItemName:'Blue Jeans',
+  Price: 2000,
+  Quantity:1000
+}
+//since Id is autoincrement column, so the value will be automatically generated.
+Connection.insert({
+  Into: 'Product',
+  Values: [Value]
+  OnSuccess: function(rowsInserted) {
+    if (rowsInserted > 0) {
+      alert('successfully added');
+    }
+  },
+  OnError: function(err) {
+    console.log(err);
+    alert(err.Message);
+  }
+});
+
+```
   
 #### Read data
 
 JsStore provides select API for reading data. Lets say I want to retrieve the record which contains Id 5.
 
-<script src="https://gist.github.com/ujjwalguptaofficial/0722d1f86747b5fa69e10a253b96a2e9.js"></script>
+```
+Connection.select({
+    From: 'Product',
+    Where: {
+      Id: 5
+    },
+    OnSuccess: function(results) {
+      alert(results.length + 'record found');
+    },
+    OnError: function(err) {
+      console.log(err);
+      alert(err.Message);
+    }
+});
+```
 
 You can also perform operations like- "IN", "LIKE", "BETWEEN", "LIMIT" etc.
 
@@ -74,13 +157,46 @@ You can also perform operations like- "IN", "LIKE", "BETWEEN", "LIMIT" etc.
 
 Lets say I want to update the product Quantity to 2000 which contains the item name - 'black'.
 
-<script src="https://gist.github.com/ujjwalguptaofficial/48f48b5a4b59328c803f522a80315269.js"></script>
+```
+Connection.update({
+  In: 'Product',
+  Where: {
+    ItemName: {
+      Like:'%black%'
+    }
+  },
+  Set: {
+    Quantity: 2000
+  },
+  OnSuccess: function(rowsUpdated) {
+    alert(rowsUpdated + ' rows updated')
+  },
+    OnError: function(err) {
+      console.log(err);
+      alert(err.Message);
+    }
+});
+```
 
 #### Delete data
 
 Lets say I want to delete the product which contains the id - 10.
 
-<script src="https://gist.github.com/ujjwalguptaofficial/52444fddc835a5e57bcf6df5e725443d.js"></script>
+```
+Connection.delete({
+    From: 'Product',
+    Where: {
+      Id: 10
+    },
+    OnSuccess: function(rowsDeleted) {
+      alert(rowsDeleted + ' record deleted');
+    },
+    OnError: function(err) {
+      console.log(err);
+      alert(err.Message);
+    }
+});
+```
     
 We hope - you have understood the above article. Now lets make something awesome.
 

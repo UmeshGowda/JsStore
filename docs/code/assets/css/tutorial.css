@@ -9,11 +9,16 @@
     color: white !important;
 }
 
+#divMenuContainer {
+    margin: 10px;
+}
+
 #divMenuContainer ul {
     list-style: none;
     display: inline-block;
     border-right: 2px solid #a2cfd5;
     padding-right: 15px;
+    margin-left: 0px;
 }
 
 #divMenuContainer ul li a {
