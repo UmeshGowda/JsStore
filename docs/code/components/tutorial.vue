@@ -12,7 +12,7 @@
        </v-card>
        
     </li>
-    <li v-for="link in linkList" :key="link.text" v-bind:class="{'link-active': link.url=== activeUrl}">
+    <li v-for="link in links" :key="link.text" v-bind:class="{'link-active': link.url=== activeUrl}">
         <a :href="link.url">{{link.text}}</a>
     </li>
 </ul>
@@ -33,24 +33,46 @@ export interface ITutorialLink {
 }
 @Component({
   props: {
-    innerHtml: String
+    innerHtml: String,
+    pageTitle: String
   }
 })
 export default class Tutorial extends Vue {
+  // props
   innerHtml;
-  linkList: ITutorialLink[] = [];
+  pageTitle;
+
+  //property
   activeUrl = "";
+
   constructor() {
     super();
-    this.linkList = this.getLinks();
-    this.activeUrl = this.linkList[0].url;
+  }
+
+  mounted() {
+    var currentUrl = (this.$route as any).path;
+    console.log(this.$route);
+    this.links.every(value => {
+      if (currentUrl.indexOf(value.url) >= 0) {
+        this.activeUrl = value.url;
+        return false;
+      }
+      return true;
+    });
+  }
+
+  head() {
+    return {
+      title: `JsStore - ${this.pageTitle}`
+    };
   }
 
   get tutorialHtml() {
+    // console.log(this.innerHtml);
     return decodeURI(this.innerHtml);
   }
 
-  getLinks() {
+  get links() {
     return [
       {
         text: "Get Started",
@@ -61,12 +83,12 @@ export default class Tutorial extends Vue {
         url: "installation"
       },
       {
-        text: "Create Table",
-        url: "create_table"
+        text: "Table",
+        url: "table"
       },
       {
-        text: "Create Database",
-        url: "create_database"
+        text: "Database",
+        url: "database"
       },
       {
         text: "insert",
@@ -115,8 +137,89 @@ export default class Tutorial extends Vue {
       {
         text: "Distinct",
         url: "distinct"
+      },
+      {
+        text: "Update",
+        url: "update"
+      },
+      {
+        text: "Update with operators",
+        url: "update_with_operators"
+      },
+      {
+        text: "Delete",
+        url: "delete"
+      },
+      {
+        text: "Count",
+        url: "count"
+      },
+      {
+        text: "Like",
+        url: "like"
+      },
+      {
+        text: "In",
+        url: "in"
+      },
+      {
+        text: "Operators",
+        url: "operators"
+      },
+      {
+        text: "Between",
+        url: "between"
+      },
+      {
+        text: "Join",
+        url: "join"
+      },
+      {
+        text: "Clear",
+        url: "clear"
+      },
+      {
+        text: "Drop Database",
+        url: "drop_database"
+      },
+      {
+        text: "Change Table Design",
+        url: "change_table_design"
+      },
+      {
+        text: "Export Json",
+        url: "export_json"
+      },
+      {
+        text: "Helpers",
+        url: "helpers"
+      },
+      {
+        text: "Promise",
+        url: "promise"
+      },
+      {
+        text: "Adv. Sql Example",
+        url: "adv_sql_example"
+      },
+      {
+        text: "Enums",
+        url: "enums"
       }
     ] as ITutorialLink[];
+  }
+
+  onNextBtnClick() {
+    const currentUrl = (this.$route as any).path;
+    var nextUrl;
+    this.links.every((value, index) => {
+      if (currentUrl.indexOf(value.url) >= 0) {
+        nextUrl = this.links[index + 1].url;
+        return false;
+      }
+      return true;
+    });
+    this.$router.push(nextUrl);
   }
 }
 </script>

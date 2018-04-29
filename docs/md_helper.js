@@ -19,21 +19,30 @@ exports.convertMdToVueAndSaveInFolder = function (folderToSave) {
     getAllFilesFromFolder(folderName).forEach(fileName => {
         var fMData = fm(getContentOfFile(fileName));
         var html = converter.makeHtml(fMData.body);
+        var layout = addMetaTags(layoutContent, fMData.attributes);
+        // console.log(layoutContent);
         fileName = fileName.split(".")[0].trim();
         var filePath = `${folderToSave}/${fileName}.vue`;
         //recreate file if exist otherwise create
         fs.closeSync(fs.openSync(filePath, 'w'));
-        var index = layoutContent.indexOf('`');
-        var firstString = layoutContent.substring(0, index + 1);
-        var lastString = layoutContent.substring(index + 1);
-        // html = html.replace(/<\/script>/g, '');
-        // html = html.replace(/src/g, ':src');
+        var index = layout.indexOf('`');
+        var firstString = layout.substring(0, index + 1);
+        var lastString = layout.substring(index + 1);
         html = encodeURI(html);
         fs.writeFileSync(filePath, firstString + html + lastString, {
             encoding: 'utf8'
         });
         // console.log(html);
     });
+}
+
+function addMetaTags(layout, metaTags) {
+    var index = layout.indexOf('title=');
+    index = index + 6;
+    var firstString = layout.substring(0, index + 1);
+    var lastString = layout.substring(index + 1);
+    var firstString = layout.substring(0, index + 1);
+    return firstString + metaTags.Title + lastString;
 }
 
 function getContentOfFile(fileName) {
