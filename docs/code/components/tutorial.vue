@@ -1,5 +1,5 @@
 <template>
-<v-layout>
+<v-layout row wrap>
     <v-flex md2 class="hidden-sm-and-down" id="divMenuContainer">
 <ul>
      <li class="search margin-bottom-10px">

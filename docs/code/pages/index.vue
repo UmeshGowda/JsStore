@@ -1,13 +1,13 @@
 <template>
 <v-layout row wrap id="divContent">
+     <v-flex sm12>
                 <div id='divLogoContainer'>
                     <div class="margin-left-20px">
-                        <!-- <span class="logo-text">JsStore</span> 
-                        <span class="logo-tagline">Think in Sql and do in Js.</span> -->
                         <img class="responsive-img" src="/img/JsStore_350_155.png" alt="JsStore logo" />
                     </div>
                 </div>
                 <div id="divStyle"></div>
+     </v-flex>
                 <v-flex sm12 offset-md1 md10 offset-xl-2 xl8 class="margin-top-40px">
                  <div id="divOverview">
                         <span style="font-size: 20px;font-weight: 500;">
@@ -82,6 +82,9 @@
 }
 .btn {
   background-color: #42abf5 !important;
+}
+.container {
+  padding: 0px;
 }
 </style>
 
