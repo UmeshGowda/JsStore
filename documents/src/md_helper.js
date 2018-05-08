@@ -3,7 +3,7 @@ var showdown = require('showdown'),
     converter = new showdown.Converter(),
     fm = require('front-matter');
 
-const folderName = 'documents';
+const folderName = '../docs';
 
 function getAllFilesFromFolder(folderName) {
     return fs.readdirSync(folderName);
