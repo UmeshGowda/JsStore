@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import NuxtLoading from './components/nuxt-loading.vue'
 
-import '..\\code\\assets\\css\\app.styl'
+import '..\\code\\styles\\app.styl'
 
-import '..\\code\\assets\\css\\common.css'
+import '..\\code\\styles\\common.css'
 
 
 let layouts = {
@@ -15,7 +15,7 @@ let layouts = {
 let resolvedLayouts = {}
 
 export default {
-  head: {"title":"JsStore - Think in SQL and do in JS","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"JsStore is an IndexedDB Wrapper. It makes IndexedDB super easy with its SQL like apis."}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"},{"rel":"stylesheet","type":"text\u002Fcss","href":"\u002Fhighlight_js\u002Fdefault.css"}],"script":[{"src":"\u002Fhighlight_js\u002Fhighlight.pack.js"}],"style":[]},
+  head: {"title":"JsStore - Think in SQL and do in JS","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"JsStore is an IndexedDB Wrapper. It makes IndexedDB super easy with its SQL like apis."}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"}],"script":[{"src":"\u002Fscripts\u002Fjsstore.min.js"}],"style":[]},
   render(h, props) {
     const loadingEl = h('nuxt-loading', { ref: 'loading' })
     const layoutEl = h(this.layout || 'nuxt')

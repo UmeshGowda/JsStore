@@ -71,7 +71,7 @@
 </template>
 
 <style scoped>
-@import url("~/assets/css/index.css");
+@import url("~/styles/index.css");
 </style>
 <style>
 .toolbar {

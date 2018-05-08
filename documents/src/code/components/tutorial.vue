@@ -52,7 +52,6 @@ export default class Tutorial extends Vue {
 
   mounted() {
     var currentUrl: string = (this.$route as any).path;
-    console.log(this.$route);
     this.links.every(value => {
       if (currentUrl.toLowerCase() === `/tutorial/${value.url.toLowerCase()}`) {
         this.activeUrl = value.url;
@@ -69,7 +68,6 @@ export default class Tutorial extends Vue {
   }
 
   get tutorialHtml() {
-    // console.log(this.innerHtml);
     return decodeURI(this.innerHtml);
   }
 
@@ -224,6 +222,6 @@ export default class Tutorial extends Vue {
   }
 }
 </script>
-<style scoped>
-@import url("~/assets/css/tutorial.css");
+<style>
+@import url("~/styles/tutorial.css");
 </style>

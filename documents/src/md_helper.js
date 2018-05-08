@@ -3,16 +3,17 @@ var showdown = require('showdown'),
     converter = new showdown.Converter(),
     fm = require('front-matter');
 
-const folderName = '../docs';
+var folderName;
 
 function getAllFilesFromFolder(folderName) {
     return fs.readdirSync(folderName);
 };
 
 
-exports.convertMdToVueAndSaveInFolder = function (folderToSave) {
+exports.convertMdToVueAndSaveInFolder = function (folderPath, folderToSave, layout) {
+    folderName = folderPath;
     // open tutorial layout
-    var layoutContent = fs.readFileSync('./code/layouts/tutorial.vueLayout', {
+    var layoutContent = fs.readFileSync('./code/layouts/' + layout + '.vueLayout', {
         encoding: 'utf8'
     });
 

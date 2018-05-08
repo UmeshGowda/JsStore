@@ -43,14 +43,9 @@ module.exports = {
       rel: "icon",
       type: "image/x-icon",
       href: "/favicon.ico"
-    }, {
-      rel: "stylesheet",
-      type: "text/css",
-      href: "/highlight_js/default.css"
-    }],
-    script: [{
-      src: '/highlight_js/highlight.pack.js'
-    }]
+    }],script: [
+      { src: '/scripts/jsstore.min.js' }
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -63,10 +58,10 @@ module.exports = {
    */
   plugins: ['~plugins/vuetify.js'],
   css: [{
-    src: ('~/assets/css/app.styl'),
+    src: ('~/styles/app.styl'),
     lang: 'styl'
   }, {
-    src: ('~/assets/css/common.css'),
+    src: ('~/styles/common.css'),
     lang: 'css'
   }],
   build: {
