@@ -208,8 +208,4 @@ We hope - you have understood the above article. Now lets make something awesome
     iframe {
         height: 300px;
     }
-
-    .row {
-        display: block;
-    }
 </style>

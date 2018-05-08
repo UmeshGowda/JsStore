@@ -28,7 +28,7 @@ var Connection = new JsStore.Instance().openDb('db_name');
 
 Or
 
-````
+```
 var Connection = new JsStore.Instance('db_name');
 ```  
 

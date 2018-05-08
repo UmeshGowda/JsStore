@@ -1,13 +1,11 @@
-Or can be used with Where to filter records.
+In allows you to specify multiple values in a Where.It can be used to execute multiple or condition.
 
-Sql
+Sql (Where)
 
 ```
 Select * From Table_Name;
 Where
-Column1=some_value
-or
-Column2=some_another_value;
+Column_Name In (value1, value2, ...)
 ```
 
 JsStore
@@ -16,9 +14,8 @@ JsStore
 Connection.select({
     From: "Table_Name",
     Where: {
-        Column1: some_value,
-        Or: {
-            Column2: some_another_value
+        Column_Name: {
+            In: [value1, value2, ...]
         }
     },
     OnSuccess: function(results) {
@@ -30,3 +27,5 @@ Connection.select({
     }
 });
 ```
+
+[Example](/example/in) [Next](#)

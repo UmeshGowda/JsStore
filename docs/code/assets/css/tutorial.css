@@ -9,10 +9,6 @@
     color: white !important;
 }
 
-#divMenuContainer {
-    margin: 10px;
-}
-
 #divMenuContainer ul {
     list-style: none;
     display: inline-block;

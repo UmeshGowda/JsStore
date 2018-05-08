@@ -1,13 +1,21 @@
+---
+Title: "Insert"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 Lets compare sql query with JsStore. It will help you to think in Sql and do in Js.
 
-Sql
+##### Sql
 
-> *   INSERT INTO TABLE_NAME
-> *   (column1, column2, column3,...columnN)
-> *   VALUES
-> *   (value1, value2, value3,...valueN);
+```
+INSERT INTO TABLE_NAME
+(column1, column2, column3,...columnN)
+VALUES
+(value1, value2, value3,...valueN);
+```
 
-JsStore
+##### JsStore
 
 ```
 var Value = {

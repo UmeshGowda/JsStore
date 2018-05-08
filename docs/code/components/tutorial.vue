@@ -21,6 +21,7 @@
     <div v-html="tutorialHtml" class="margin-top-20px"></div>
     </v-flex>
 </v-layout>
+
 </template>
 <script lang="ts">
 declare var hljs;

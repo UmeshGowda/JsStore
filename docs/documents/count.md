@@ -1,25 +1,23 @@
-Or can be used with Where to filter records.
+You can use Where and WhereIn to filter results.
 
 Sql
 
 ```
-Select * From Table_Name;
+Select count(*) From Table_Name;
 Where
-Column1=some_value
-or
-Column2=some_another_value;
+    Column1=some_value
+and
+    Column2=some_another_value;
 ```
 
 JsStore
 
 ```
-Connection.select({
+Connection.count({
     From: "Table_Name",
     Where: {
         Column1: some_value,
-        Or: {
-            Column2: some_another_value
-        }
+        Column2: some_another_value
     },
     OnSuccess: function(results) {
         //results will be array of objects.
@@ -30,3 +28,5 @@ Connection.select({
     }
 });
 ```
+
+[Example](/example/count) [Next](#)
