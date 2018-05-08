@@ -1,6 +1,12 @@
+---
+Title: "Group By"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 The Group By is used to group the result-set by one or more columns. You can also use Aggregate functions with group by just like you use in SQL.
 
-Sql (Where)
+#### Sql (Where)
 
 ```
 Select * From Table_Name;
@@ -8,7 +14,7 @@ Group By
 Column_Name
 ```
 
-JsStore
+#### JsStore
 
 ```
 Connection.select({

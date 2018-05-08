@@ -1,3 +1,9 @@
+---
+Title: "Advanced Sql Example"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 These are some examples of common use cases -
 
 *   **SQL** \- Select * From Table_Name Where Column1=value1 or Column2=value2 or Column3=value3;

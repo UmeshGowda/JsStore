@@ -1,4 +1,10 @@
-getDbVersion
+---
+Title: "Helpers"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
+#### getDbVersion
 
 It returns the current Database version.
 
@@ -10,7 +16,7 @@ JsStore.getDbVersion(db_name, function(version) {
 
 [Example](/example/get_db_version)
 
-getDbSchema
+#### getDbSchema
 
 It returns the current Database Schema.
 
@@ -20,7 +26,7 @@ JsStore.getDbSchema(db_name, function(schema) {
 });
 ```
 
-isNull
+#### isNull
 
 Check whether supplied value is null or not.
 
@@ -28,7 +34,7 @@ Check whether supplied value is null or not.
 JsStore.isNull(value)
 ```
 
-enableLog
+#### enableLog
 
 It enables the log
 
@@ -36,7 +42,7 @@ It enables the log
 JsStore.enableLog()
 ```
 
-disableLog
+#### disableLog
 
 It disable the log
 
@@ -44,7 +50,7 @@ It disable the log
 JsStore.disableLog()
 ```
 
-getDbList
+#### getDbList
 
 It returns list of database created using jsstore.
 
@@ -53,7 +59,7 @@ JsStore.getDbList(function(result) {
     console.log(result)
 });
 ```
-getType
+#### getType
 
 It returns type of data.
 

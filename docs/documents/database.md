@@ -1,3 +1,9 @@
+---
+Title: "DataBase"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 A database in JsStore is array of tables.
 
 ```

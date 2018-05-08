@@ -4,13 +4,13 @@ Created Date: "08/05/2018"
 Last Updated : "08/05/2018"
 ---
 
-Sql
+#### Sql
 
 ```
 Select * from Table_Name;
 ```
 
-JsStore
+#### JsStore
 
 ```
 Connection.select({

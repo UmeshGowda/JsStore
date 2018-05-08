@@ -1,3 +1,9 @@
+---
+Title: "Operators"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 JsStore supports following operators : -
 
 *   **" \> " :** Finds value greater than supplied value.
@@ -7,7 +13,7 @@ JsStore supports following operators : -
 *   **" \- " :** Finds value between two supplied value.
 *   **" != " :** Finds value not equal to supplied value.
 
-Sql
+#### Sql
 
 ```
 Select * From Table_Name;
@@ -15,7 +21,7 @@ Where
 Column_Name > some_value
 ```
 
-JsStore
+#### JsStore
 
 ```
 Connection.select({

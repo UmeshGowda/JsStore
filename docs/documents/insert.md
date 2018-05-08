@@ -6,7 +6,7 @@ Last Updated : "08/05/2018"
 
 Lets compare sql query with JsStore. It will help you to think in Sql and do in Js.
 
-##### Sql
+#### Sql
 
 ```
 INSERT INTO TABLE_NAME
@@ -15,7 +15,7 @@ VALUES
 (value1, value2, value3,...valueN);
 ```
 
-##### JsStore
+#### JsStore
 
 ```
 var Value = {

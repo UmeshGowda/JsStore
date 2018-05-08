@@ -1,12 +1,18 @@
+---
+Title: "Limit"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 Limit is used to specify the number of records to return. It is available with only select.
 
-Sql
+#### Sql
 
 ```
 Select * from Table_Name Limit number;
 ```
 
-JsStore
+#### JsStore
 
 ```
 Connection.select({

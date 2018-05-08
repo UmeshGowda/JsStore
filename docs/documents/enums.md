@@ -1,3 +1,9 @@
+---
+Title: "Enums"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 JsStore provides some enum values. These are -
 
 *   **Data_Type -** String, Object, Number, Boolean, Array

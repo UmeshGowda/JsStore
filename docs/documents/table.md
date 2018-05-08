@@ -1,3 +1,9 @@
+---
+Title: "Table"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 Before creating Table, lets see how to create a column. A column in JsStore is an json object. It has following properties -
 
 ```

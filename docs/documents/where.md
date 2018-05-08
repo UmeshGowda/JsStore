@@ -6,7 +6,7 @@ Last Updated : "08/05/2018"
 
 Where can be used to filter records same as Sql Where clause.
 
-Sql (Where)
+#### Sql (Where)
 
 ```
 Select * From Table_Name
@@ -16,7 +16,7 @@ and
 Column2=some_another_value;
 ```
 
-JsStore
+#### JsStore
 
 ```
 Connection.select({

@@ -1,6 +1,12 @@
+---
+Title: "Between"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 **" \- "** symbol is used to select result between two values. The values should be numbers only.
 
-Sql (Where)
+#### Sql (Where)
 
 ```
 Select * From Table_Name;
@@ -8,7 +14,7 @@ Where
 Column_Name Between value1 and value2
 ```
 
-JsStore
+#### JsStore
 
 ```
 Connection.select({

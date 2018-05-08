@@ -1,3 +1,9 @@
+---
+Title: "Change Table Design"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 Define your Table Object and add an extra property 'Version' with a value greater than Db Version and call api 'isDbExit' supplying table details (check out example). You can get Db version by using below code.
 
 ```
@@ -14,7 +20,7 @@ If you want to save your data.You can select all data and save it in a variable 
 
 **Note :-** [KeyStore](https://github.com/ujjwalguptaofficial/KeyStore) is part of JsStore. It uses KeyStore to store meta data.
 
-Example
+#### Example
 
 Step - 1 : Define your table
 

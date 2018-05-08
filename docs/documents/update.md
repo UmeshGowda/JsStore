@@ -1,6 +1,12 @@
+---
+Title: "Update"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 You can use Where to filter results.
 
-Sql
+#### Sql
 
 ```
 Update Table_Name;
@@ -13,7 +19,7 @@ and
     Column4=some_another_value;
 ```
 
-JsStore
+#### JsStore
 
 ```
 Connection.update({

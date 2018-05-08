@@ -1,6 +1,12 @@
+---
+Title: "Count"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 You can use Where and WhereIn to filter results.
 
-Sql
+#### Sql
 
 ```
 Select count(*) From Table_Name;
@@ -10,7 +16,7 @@ and
     Column2=some_another_value;
 ```
 
-JsStore
+#### JsStore
 
 ```
 Connection.count({

@@ -51,10 +51,10 @@ export default class Tutorial extends Vue {
   }
 
   mounted() {
-    var currentUrl = (this.$route as any).path;
+    var currentUrl: string = (this.$route as any).path;
     console.log(this.$route);
     this.links.every(value => {
-      if (currentUrl.indexOf(value.url) >= 0) {
+      if (currentUrl.toLowerCase() === `/tutorial/${value.url.toLowerCase()}`) {
         this.activeUrl = value.url;
         return false;
       }
@@ -214,7 +214,7 @@ export default class Tutorial extends Vue {
     const currentUrl = (this.$route as any).path;
     var nextUrl;
     this.links.every((value, index) => {
-      if (currentUrl.indexOf(value.url) >= 0) {
+      if (currentUrl === value.url) {
         nextUrl = this.links[index + 1].url;
         return false;
       }

@@ -1,3 +1,9 @@
+---
+Title: "Aggregate Functions"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 JsStore supports following aggregate functions : -
 
 *   **Count :** Returns the number of rows of specified column.
@@ -6,13 +12,13 @@ JsStore supports following aggregate functions : -
 *   **Max :** Returns the maximum value of specified column.
 *   **Min :** Returns the minimum value of specified column.
 
-Sql
+#### Sql
 
 ```
 Select min(Column\_Name) From Table\_Name;
 ```
 
-JsStore
+#### JsStore
 
 ```
 Connection.select({

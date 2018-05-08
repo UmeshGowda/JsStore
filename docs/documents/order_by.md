@@ -1,12 +1,18 @@
+---
+Title: "Order By"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 Order By is used to sort the data in ascending or descending order, based on any column.
 
-Sql
+#### Sql
 
 ```
 Select * from Table\_Name Order by column\_name sort_type;
 ```
 
-JsStore
+#### JsStore
 
 ```
 Connection.select({

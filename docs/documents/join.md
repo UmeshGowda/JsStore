@@ -1,6 +1,12 @@
+---
+Title: "Join"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 JsStore supports three joins - Inner, Left, Right.
 
-Sql (inner join between two tables)
+#### Sql (inner join between two tables)
 
 ```
 Select * From Table1;
@@ -12,7 +18,7 @@ And
 Table2.Column1=some_another_value
 ```
 
-JsStore
+#### JsStore
 
 ```
 var JoinLogic = {
@@ -49,7 +55,7 @@ Connection.select({
 
 [Example](/example/simple_join)
 
-Sql (inner join between three tables)
+#### Sql (inner join between three tables)
 
 ```
 Select * From Table1;
@@ -59,7 +65,7 @@ Inner Join Table3
 On Table1.some_column = Table3.some_common_column
 ```
 
-JsStore
+#### JsStore
 
 ```
 var JoinLogic1 = {

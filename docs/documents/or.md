@@ -1,6 +1,12 @@
+---
+Title: "Or"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 Or can be used with Where to filter records.
 
-Sql
+#### Sql
 
 ```
 Select * From Table_Name;
@@ -10,7 +16,7 @@ or
 Column2=some_another_value;
 ```
 
-JsStore
+#### JsStore
 
 ```
 Connection.select({

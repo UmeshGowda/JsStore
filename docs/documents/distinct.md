@@ -1,14 +1,20 @@
+---
+Title: "Distinct"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 Distinct is used to return the unique set of result. Distinct filters the result for all columns together except Primary column, since Primary column will make the result always unique.
 
 **Note :-** If you want to return the distinct results based on some columns, then you should use GroupBy.
 
-Sql (Where)
+#### Sql (Where)
 
 ```
 Select Distinct * From Table_Name;
 ```
 
-JsStore
+#### JsStore
 
 ```
 Connection.select({

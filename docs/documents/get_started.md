@@ -200,7 +200,7 @@ Connection.delete({
     
 We hope - you have understood the above article. Now lets make something awesome.
 
-##### * Check it out other articles -
+#### * Check it out other articles -
 
 * [Using JsStore in Angular5](http://http://ujjwalguptaofficial.blogspot.in/2017/10/angular4-crud-operation-in-indexeddb.html)
 

@@ -1,3 +1,9 @@
+---
+Title: "Export Json"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 As the name say - "exportJson" will download a json file. It takes a select query and result from the query is saved as a json file.
 
 ```

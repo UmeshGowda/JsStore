@@ -1,6 +1,11 @@
+---
+Title: "Ignore Case"
+Created Date: "08/05/2018"
+Last Updated : "08/05/2018"
+---
+
 JavasScript is case sensitive, so is the IndexedDB. You can use option - 'IgnoreCase' to filter records with case insensitive.
 
-JsStore
 
 ```
 Connection.select({
