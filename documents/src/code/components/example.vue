@@ -113,13 +113,13 @@ export default class Example extends Vue {
 
   head() {
     return {
-      title: `Example - ${this.pageTitle}`
+      title: `Example - ${this.pageTitle}`,
+      script: [{ src: "/scripts/jsstore.js" }]
     };
   }
 
   restoreDb() {
     this.isEditorLoading = true;
-
     new DemoDbService().restoreDb(function() {
       setTimeout(function() {
         (window as any).location.reload();

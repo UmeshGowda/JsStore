@@ -43,9 +43,7 @@ module.exports = {
       rel: "icon",
       type: "image/x-icon",
       href: "/favicon.ico"
-    }],script: [
-      { src: '/scripts/jsstore.min.js' }
-    ]
+    }]
   },
   /*
    ** Customize the progress-bar color
