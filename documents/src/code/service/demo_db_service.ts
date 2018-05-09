@@ -17,7 +17,7 @@ export class DemoDbService extends IdbService {
                     this.connection.openDb(this.dbName, getDbInfo);
                 }
                 else {
-                    this.connection.createDb(this.getDbStructure(), () => {
+                    this.connection.createDb(this.getDbStructure_(), () => {
                         this.insertDemoDbData(getDbInfo);
                     }, err => {
                         reject(err);
@@ -72,6 +72,10 @@ export class DemoDbService extends IdbService {
         });
     }
 
+    restoreDb(callBack) {
+        this.connection.openDb(this.dbName).dropDb(callBack);
+    }
+
     private count_(from: string) {
         return this.connection.count({
             From: from
@@ -92,7 +96,7 @@ export class DemoDbService extends IdbService {
         });
     }
 
-    getDbStructure() {
+    private getDbStructure_() {
 
         var customers = {
             Name: 'Customers',

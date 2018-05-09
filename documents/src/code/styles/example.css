@@ -35,6 +35,9 @@
 
 #divExampleCode #divResult table tr td {
     word-break: break-all;
+    text-align: center;
+    border-bottom: 1px solid;
+    border-right: 1px solid;
 }
 
 #divDbInfo table tr th,

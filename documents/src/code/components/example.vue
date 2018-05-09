@@ -17,7 +17,7 @@
                     </tr>
                 </tbody>
                 <tfoot>
-                    <tr>
+                    <tr @click="restoreDb">
                         <td colspan="2">
                             <a class="margin-top-20px btn primary" href="#">Restore Db</a>
                         </td>
@@ -28,7 +28,7 @@
     <v-flex id="divExampleCode" xs12 sm12 md7 l8 xl6 class="margin-left-15px">
      <div>
         <div class="content-heading">JsStore Code</div>
-        <div id="divCode">
+        <div id="divCode" contenteditable>
             <div v-html="exampleHtml" class="margin-top-20px"></div>
         </div>
     </div>
@@ -36,7 +36,7 @@
         <span>
             You can also edit code and run it.
         </span>
-        <button disabled id="btnExecute" class="btn waves-effect right-align">Run
+        <button @click="execute" disabled id="btnExecute" class="btn waves-effect right-align">Run
             <i class="material-icons">&#xE037;</i>
         </button>
     </p>
@@ -45,13 +45,11 @@
             <span class="content-heading">Result :</span>
             <span id="recordCount" style="padding-top:10px;" class="hidden right">No of Records : </span>
         </div>
-        <p id='timeTakenContainer' class="right-align hidden">
+        <p id="timeTakenContainer" class="right-align hidden">
             Time Taken :
             <span id='timeCount'></span> sec.
         </p>
-        <div v-html="resultInnerHtml" id="divResult" contenteditable>
-
-        </div>
+        <div id="divResult"></div>
     </div>
     </v-flex>
 </v-layout>
@@ -72,6 +70,10 @@
 import { Component, Vue } from "nuxt-property-decorator";
 import * as axios from "axios";
 import { DemoDbService } from "../service/demo_db_service";
+import { IDbInfo } from "../interfaces";
+
+var codeInitTime;
+var isJoin = false;
 
 @Component({
   props: {
@@ -86,31 +88,27 @@ export default class Example extends Vue {
 
   //member
   isEditorLoading = true;
-  dbInfo;
-  resultInnerHtml="";
-
+  dbInfo: IDbInfo[] = [];
 
   constructor() {
     super();
   }
 
   mounted() {
-    // this.editor = ace.edit("divCode");
-    // editor.setTheme("ace/theme/eclipse");
-    // editor.session.setMode("ace/mode/javascript");
     JsStore.enableLog();
     var demoServiceInstance = new DemoDbService();
     demoServiceInstance
       .createDemoDataBase()
       .then(dbInfo => {
         this.isEditorLoading = false;
-        this.dbInfo = dbInfo;
+        this.dbInfo = dbInfo as any;
+        (document.getElementById("btnExecute") as HTMLElement).removeAttribute(
+          "disabled"
+        );
       })
       .catch(err => {
         console.log(err);
       });
-
-    //console.log(JsStore);//
   }
 
   head() {
@@ -119,9 +117,96 @@ export default class Example extends Vue {
     };
   }
 
+  restoreDb() {
+    this.isEditorLoading = true;
+
+    new DemoDbService().restoreDb(function() {
+      setTimeout(function() {
+        (window as any).location.reload();
+      }, 200);
+    });
+  }
+
+  execute() {
+    var code = (document.querySelector("#divCode pre") as HTMLElement)
+      .innerText;
+    if (code.indexOf("Join") >= 0) {
+      isJoin = true;
+    }
+    eval(code);
+    codeInitTime = performance.now();
+  }
+
   get exampleHtml() {
     return decodeURI(this.innerHtml);
   }
+}
+
+function $(selector) {
+  return document.querySelector(selector) as HTMLElement;
+}
+
+export function log(results) {
+  var codeEndTime = performance.now(),
+    timeTaken = (codeEndTime - codeInitTime) / 1000;
+  $("#timeTakenContainer").classList.remove("hidden");
+  $("#timeCount").innerText = timeTaken.toString();
+  var result_type = JsStore.getType(results);
+  switch (result_type) {
+    case JsStore.Data_Type.Array:
+      var Table = document.createElement("Table"),
+        RowsLength = results.length,
+        HtmlString = "<tr>",
+        Props: string[] = [];
+      for (var prop in results[0]) {
+        Props.push(prop);
+        HtmlString += "<th>" + prop + "</th>";
+      }
+      HtmlString += "</tr>";
+      var Width = 100 / Props.length;
+      for (var i = 0; i < RowsLength; i++) {
+        var Temp = "<tr>";
+        for (var j = 0; j < Props.length; j++) {
+          if (!isJoin) {
+            Temp += "<td>" + results[i][Props[j]] + "</td>";
+          } else {
+            Temp +=
+              "<td style=width:" +
+              Width +
+              "%>" +
+              JSON.stringify(results[i][Props[j]]) +
+              "</td>";
+          }
+        }
+        Temp += "</tr>";
+        HtmlString += Temp;
+      }
+      Table.innerHTML = HtmlString;
+      Table.className = "bordered responsive-table centered";
+      var DivResult = $("#divResult");
+      DivResult.innerHTML = "";
+      DivResult.appendChild(Table);
+      var recordCount = $("#recordCount");
+      recordCount.classList.remove("hidden");
+      recordCount.innerText = "No of Record : " + results.length;
+      break;
+    case JsStore.Data_Type.Object:
+      results = JSON.stringify(results);
+    case JsStore.Data_Type.String:
+    case JsStore.Data_Type.Number:
+      var recordCount = $("#recordCount");
+      recordCount.classList.add("hidden");
+      var DivResult = $("#divResult");
+      DivResult.innerHTML = results; //+ " rows affected";
+      break;
+    default:
+      alert("invalid result");
+  }
+}
+try {
+  (window as any).log = log;
+} catch (ex) {
+  console.log(ex);
 }
 </script>
 <style>
